@@ -48,32 +48,28 @@
     <h1>Encuesta de Salud</h1>
     <form action="#" method="POST">
 
-        <!-- Edad: input number con rango -->
         <div class="form-group">
             <label for="edad">Edad (entre 1 y 120 años):</label>
             <input type="number" id="edad" name="edad" min="1" max="120" required>
         </div>
 
-        <!-- Peso: input number con rango -->
         <div class="form-group">
             <label for="peso">Peso en kg (entre 2 y 300 kg):</label>
             <input type="number" id="peso" name="peso" min="2" max="300" step="0.1" required>
         </div>
 
-        <!-- Altura: input number con rango -->
         <div class="form-group">
             <label for="altura">Altura en cm (entre 50 y 250 cm):</label>
             <input type="number" id="altura" name="altura" min="50" max="250" required>
         </div>
 
-        <!-- Nivel de dolor: input range -->
+
         <div class="form-group">
             <label for="dolor">Nivel de dolor (0 = sin dolor, 10 = dolor máximo):</label>
             <input type="range" id="dolor" name="dolor" min="0" max="10" value="0" oninput="mostrarValorDolor(this.value)">
             <div class="rango-valor">Valor seleccionado: <span id="valorDolor">0</span></div>
         </div>
 
-        <!-- Tipo de sangre: select -->
         <div class="form-group">
             <label for="sangre">Tipo de sangre:</label>
             <select id="sangre" name="sangre" required>
@@ -95,7 +91,6 @@
     </form>
 
     <script>
-        // Función para mostrar el valor del rango de dolor
         function mostrarValorDolor(valor) {
             document.getElementById('valorDolor').textContent = valor;
         }
