@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Salud</title>
+</head>
+<body>
 
+    <h2>Encuesta </h2>
+
+    <form>
+        <!-- 1. EDAD: Número con rango 1 a 120 -->
+        <label for="edad">Edad (Entre 1 y 120 años):</label>
+        <input type="number" id="edad" name="edad" min="1" max="120" required>
+        <br><br>
+
+        <!-- 2. PESO: Número con rango 1 a 300 kg -->
+        <label for="peso">Peso Actual (kg - Entre 1 y 300):</label>
+        <input type="number" id="peso" name="peso" min="1" max="300" step="0.1" required>
+        <br><br>
+
+        <!-- 3. NIVEL DE DOLOR: Barra deslizante 0 a 10 -->
+        <label for="dolor">Nivel de Dolor (0 = Sin dolor | 10 = Dolor Máximo):</label>
+        <input type="range" id="dolor" name="dolor" min="0" max="10" value="0" oninput="mostrarValorDolor(this.value)">
+        <span id="valorDolor">0</span>
+        <br><br>
+
+        <!-- 4. TIPO DE SANGRE: Lista Desplegable -->
+        <label for="sangre">Tipo de Sangre:</label>
+        <select id="sangre" name="sangre" required>
+            <option value="">-- Seleccione una opción --</option>
+            <option value="A+">A Positivo (A+)</option>
+            <option value="A-">A Negativo (A-)</option>
+            <option value="B+">B Positivo (B+)</option>
+            <option value="B-">B Negativo (B-)</option>
+            <option value="AB+">AB Positivo (AB+)</option>
+            <option value="AB-">AB Negativo (AB-)</option>
+            <option value="O+">O Positivo (O+)</option>
+            <option value="O-">O Negativo (O-)</option>
+        </select>
+        <br><br>
+
+        <button type="button" onclick="enviarEncuesta()">Enviar Encuesta</button>
+    </form>
+
+    <hr>
+
+    <!-- Zona de Resultados -->
+    <div id="resultado"></div>
+
+
+    <script>
+        // Muestra el número mientras mueves la barra de dolor
+        function mostrarValorDolor(valor) {
+            document.getElementById("valorDolor").textContent = valor;
+        }
+
+        function enviarEncuesta() {
+            // Obtener Datos
+            let edad = document.getElementById("edad").value;
+            let peso = document.getElementById("peso").value;
+            let dolor = document.getElementById("dolor").value;
+            let sangre = document.getElementById("sangre").value;
+
+            // Validación Básica
+            if(sangre === ""){
+                document.getElementById("resultado").innerHTML = "<p style='color:red'> Debes seleccionar tu tipo de sangre.</p>";
+                return;
+            }
+
+            // Mostrar Resumen
+            document.getElementById("resultado").innerHTML = 
+                "<h3 style='color:green'>Enviada Correctamente</h3>" +
+                "<p><strong>Edad:</strong> " + edad + " años</p>" +
+                "<p><strong>Peso:</strong> " + peso + " kg</p>" +
+                "<p><strong>Nivel de Dolor:</strong> " + dolor + "/10</p>" +
+                "<p><strong>Tipo de Sangre:</strong> " + sangre + "</p>";
+        }
+    </script>
+
+</body>
+</html>
