@@ -4,154 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encuesta de Salud</title>
-
-    <style>
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            width: 400px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
-        }
-
-        h1, h2 {
-            text-align: center;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-        }
-
-        input, select, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-        }
-
-        button {
-            background: #007bff;
-            color: white;
-            border: none;
-            margin-top: 20px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #0056b3;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-
-        th {
-            background: #007bff;
-            color: white;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-
-    </style>
 </head>
-
 <body>
 
-    <div class="container">
+    <h2>Encuesta </h2>
 
-        <h1>Encuesta de Salud</h1>
+    <form>
+        <!-- 1. EDAD: Número con rango 1 a 120 -->
+        <label for="edad">Edad (Entre 1 y 120 años):</label>
+        <input type="number" id="edad" name="edad" min="1" max="120" required>
+        <br><br>
 
-        <form>
+        <!-- 2. PESO: Número con rango 1 a 300 kg -->
+        <label for="peso">Peso Actual (kg - Entre 1 y 300):</label>
+        <input type="number" id="peso" name="peso" min="1" max="300" step="0.1" required>
+        <br><br>
 
-            <!-- Edad -->
-            <label for="edad">Edad:</label>
-            <input type="number" id="edad" name="edad" min="1" max="120" required>
+        <!-- 3. NIVEL DE DOLOR: Barra deslizante 0 a 10 -->
+        <label for="dolor">Nivel de Dolor (0 = Sin dolor | 10 = Dolor Máximo):</label>
+        <input type="range" id="dolor" name="dolor" min="0" max="10" value="0" oninput="mostrarValorDolor(this.value)">
+        <span id="valorDolor">0</span>
+        <br><br>
 
-            <!-- Peso -->
-            <label for="peso">Peso (kg):</label>
-            <input type="number" id="peso" name="peso" min="1" max="300" required>
+        <!-- 4. TIPO DE SANGRE: Lista Desplegable -->
+        <label for="sangre">Tipo de Sangre:</label>
+        <select id="sangre" name="sangre" required>
+            <option value="">-- Seleccione una opción --</option>
+            <option value="A+">A Positivo (A+)</option>
+            <option value="A-">A Negativo (A-)</option>
+            <option value="B+">B Positivo (B+)</option>
+            <option value="B-">B Negativo (B-)</option>
+            <option value="AB+">AB Positivo (AB+)</option>
+            <option value="AB-">AB Negativo (AB-)</option>
+            <option value="O+">O Positivo (O+)</option>
+            <option value="O-">O Negativo (O-)</option>
+        </select>
+        <br><br>
 
-            <!-- Nivel de dolor -->
-            <label for="dolor">Nivel de dolor:</label>
-            <input type="range" id="dolor" name="dolor" min="0" max="10">
+        <button type="button" onclick="enviarEncuesta()">Enviar Encuesta</button>
+    </form>
 
-            <!-- Tipo de sangre -->
-            <label for="sangre">Tipo de sangre:</label>
-            <select id="sangre" name="sangre" required>
-                <option value="">Seleccione</option>
-                <option>A+</option>
-                <option>A-</option>
-                <option>B+</option>
-                <option>B-</option>
-                <option>AB+</option>
-                <option>AB-</option>
-                <option>O+</option>
-                <option>O-</option>
-            </select>
+    <hr>
 
-            <button type="submit">Enviar</button>
+    <!-- Zona de Resultados -->
+    <div id="resultado"></div>
 
-        </form>
 
-        <!-- TABLA -->
-        <h2>Resultados de la Encuesta</h2>
+    <script>
+        // Muestra el número mientras mueves la barra de dolor
+        function mostrarValorDolor(valor) {
+            document.getElementById("valorDolor").textContent = valor;
+        }
 
-        <table>
+        function enviarEncuesta() {
+            // Obtener Datos
+            let edad = document.getElementById("edad").value;
+            let peso = document.getElementById("peso").value;
+            let dolor = document.getElementById("dolor").value;
+            let sangre = document.getElementById("sangre").value;
 
-            <thead>
-                <tr>
-                    <th>Edad</th>
-                    <th>Peso</th>
-                    <th>Nivel Dolor</th>
-                    <th>Tipo Sangre</th>
-                </tr>
-            </thead>
+            // Validación Básica
+            if(sangre === ""){
+                document.getElementById("resultado").innerHTML = "<p style='color:red'> Debes seleccionar tu tipo de sangre.</p>";
+                return;
+            }
 
-            <tbody>
-                <tr>
-                    <td>25</td>
-                    <td>70 kg</td>
-                    <td>3</td>
-                    <td>O+</td>
-                </tr>
-
-                <tr>
-                    <td>40</td>
-                    <td>82 kg</td>
-                    <td>6</td>
-                    <td>A+</td>
-                </tr>
-
-                <tr>
-                    <td>31</td>
-                    <td>65 kg</td>
-                    <td>1</td>
-                    <td>B-</td>
-                </tr>
-            </tbody>
-
-        </table>
-
-    </div>
+            // Mostrar Resumen
+            document.getElementById("resultado").innerHTML = 
+                "<h3 style='color:green'>Enviada Correctamente</h3>" +
+                "<p><strong>Edad:</strong> " + edad + " años</p>" +
+                "<p><strong>Peso:</strong> " + peso + " kg</p>" +
+                "<p><strong>Nivel de Dolor:</strong> " + dolor + "/10</p>" +
+                "<p><strong>Tipo de Sangre:</strong> " + sangre + "</p>";
+        }
+    </script>
 
 </body>
 </html>
